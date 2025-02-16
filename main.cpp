@@ -10,21 +10,26 @@ public:
         this->name = name;
         this->age = age;
     }
+
     void print() { cout << name << " " << age << endl; }
 };
 
-template <typename T> class Node {
+template<typename T>
+class Node {
 public:
     T *value;
     Node<T> *next;
+
     Node(T *value) {
         this->value = value;
-        this->next = NULL;
+        this->next = nullptr;
     }
+
     void print() { value->print(); }
 };
 
-template <typename T> class LinkedList {
+template<typename T>
+class LinkedList {
 private:
     int length;
     Node<T> *head;
@@ -34,6 +39,7 @@ public:
         this->length = 1;
         this->head = new Node<T>(value);
     }
+
     void add(T *value) {
         Node<T> *newNode = new Node<T>(value);
         Node<T> *temp = head;
@@ -44,7 +50,7 @@ public:
         length++;
     }
 
-    Node<T>* get(int index) {
+    Node<T> *get(int index) {
         if (index < 0 | index >= length)
             return NULL;
         Node<T> *temp = head;
@@ -70,24 +76,23 @@ public:
 
     void dellast() {
         Node<T> *temp = head;
-        while (temp->next!=NULL)
+        while (temp->next != NULL)
             temp = temp->next;
         delete temp;
         length--;
     }
 
     void deleteNode(int index) {
-       if (index < 0 | index >= length) {
-           cout<<"Index is invalid"<<endl;
-           return;
-       }
+        if (index < 0 | index >= length) {
+            cout << "Index is invalid" << endl;
+            return;
+        }
         if (index == 0) {
             delfirst();
         }
         if (index == length) {
             dellast();
-        }
-        else {
+        } else {
             Node<T> *temp = get(index);
             Node<T> *temp1 = get(index - 1);
             Node<T> *temp2 = get(index + 1);
@@ -96,9 +101,9 @@ public:
         }
     }
 
-    void insert(int index, T* value) {
+    void insert(int index, T *value) {
         if (index < 0 | index >= length) {
-            cout<<"Index is invalid<<"<< endl;
+            cout << "Index is invalid<<" << endl;
             return;
         }
         if (index == 0) {
@@ -106,30 +111,28 @@ public:
         }
         if (index == length) {
             add(value);
-        }
-        else {
-            Node<T>* newNode = new Node<T> (value);
-            Node<T> *temp = get(index -1);
+        } else {
+            Node<T> *newNode = new Node<T>(value);
+            Node<T> *temp = get(index - 1);
             newNode->next = temp->next;
             temp->next = newNode;
         }
     }
 
 
-   void reverselist(){
+    void reverselist() {
         //TODO:Write a function to reverse the list using the logic from the slide.
         Node<T> *prev = nullptr;
         Node<T> *curr = head;
-        while (curr!=nullptr) {
+        Node<T> *next;
+        while (curr != nullptr) {
             next = curr->next;
             curr->next = prev;
             prev = curr;
             curr = next;
         }
         head = prev;
-
-        }
-
+    }
 
 
     void print() {
@@ -151,7 +154,14 @@ int main() {
     ll->addhead(s3);
     ll->insert(3, s2);
     ll->print();
-    ll->deleteNode(2);
+    ll->deleteNode(-1);
+    ll->print();
+    ll->add(s3);
+    ll->add(s1);
+    ll->add(s2);
+    ll->add(s3);
+    ll->add(s1);
     ll->print();
     ll->reverselist();
+    ll->print();
 }
