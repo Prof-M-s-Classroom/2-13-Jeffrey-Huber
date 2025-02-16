@@ -44,6 +44,16 @@ public:
         length++;
     }
 
+    Node<T>* get(int index) {
+        if (index < 0 | index >= length)
+            return NULL;
+        Node<T> *temp = head;
+        for (int i = 0; i < index; i++) {
+            temp = temp->next;
+        }
+        return temp;
+    }
+
     void addhead(T *value) {
         Node<T> *newNode = new Node<T>(value);
         newNode->next = head;
@@ -67,16 +77,60 @@ public:
     }
 
     void deleteNode(int index) {
-       //TODO:Write the function to delete at the given index. Reuse the pre-written functions for edge cases. Account for missing index.
+       if (index < 0 | index >= length) {
+           cout<<"Index is invalid"<<endl;
+           return;
+       }
+        if (index == 0) {
+            delfirst();
+        }
+        if (index == length) {
+            dellast();
+        }
+        else {
+            Node<T> *temp = get(index);
+            Node<T> *temp1 = get(index - 1);
+            Node<T> *temp2 = get(index + 1);
+            temp1->next = temp2;
+            delete temp;
+        }
     }
 
-   void insert(int index, T *value) {
-        //TODO:Write a function to insert a new node at a give index. Reuse the pre-written functions for edge cases. Account for missing index
+    void insert(int index, T* value) {
+        if (index < 0 | index >= length) {
+            cout<<"Index is invalid<<"<< endl;
+            return;
+        }
+        if (index == 0) {
+            addhead(value);
+        }
+        if (index == length) {
+            add(value);
+        }
+        else {
+            Node<T>* newNode = new Node<T> (value);
+            Node<T> *temp = get(index -1);
+            newNode->next = temp->next;
+            temp->next = newNode;
+        }
     }
+
 
    void reverselist(){
         //TODO:Write a function to reverse the list using the logic from the slide.
-    }
+        Node<T> *prev = nullptr;
+        Node<T> *curr = head;
+        while (curr!=nullptr) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+
+        }
+
+
 
     void print() {
         cout << "Printing List.." << endl;
@@ -95,9 +149,9 @@ int main() {
     LinkedList<student> *ll = new LinkedList<student>(s1);
     ll->add(s2);
     ll->addhead(s3);
+    ll->insert(3, s2);
     ll->print();
-    ll->delfirst();
+    ll->deleteNode(2);
     ll->print();
-    ll->dellast();
-    ll->print();
+    ll->reverselist();
 }
